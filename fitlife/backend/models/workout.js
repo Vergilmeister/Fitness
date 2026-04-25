@@ -1,34 +1,49 @@
-// backend/routes/workout.js
-const express = require('express');
-const router = express.Router();
-const { body, validationResult } = require('express-validator');
-const Workout = require('../models/Workout');
-const { protect } = require('../middleware/authMiddleware');
+// backend/models/Workout.js
+const mongoose = require('mongoose');
 
-router.use(protect);
+const workoutSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    title: {
+      type: String,
+      required: [true, 'Workout title is required'],
+      trim: true,
+      maxlength: 100,
+    },
+    type: {
+      type: String,
+      required: [true, 'Workout type is required'],
+      enum: ['Cardio', 'Strength', 'Flexibility', 'HIIT', 'Yoga', 'Sports', 'Other'],
+    },
+    duration: {
+      type: Number, // in minutes
+      required: [true, 'Duration is required'],
+      min: 1,
+      max: 600,
+    },
+    calories: {
+      type: Number,
+      required: [true, 'Calories is required'],
+      min: 0,
+    },
+    notes: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { timestamps: true }
+);
 
-router.get('/', async (req, res) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
-    const skip = (page - 1) * limit;
-
-    const total = await Workout.countDocuments({ user: req.user._id });
-    const workouts = await Workout.find({ user: req.user._id })
-      .sort({ date: -1 })
-      .skip(skip)
-      .limit(limit);
-
-    res.json({
-      workouts,
-      page,
-      totalPages: Math.ceil(total / limit),
-      total,
-    });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error fetching workouts' });
-  }
-});
+module.exports = mongoose.model('Workout', workoutSchema);
 
 router.get('/stats', async (req, res) => {
   try {
