@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const Workout = require('../models/Workout');
+const Workout = require('../models/workout');
 const { protect } = require('../middleware/authMiddleware');
 
 // All routes are protected
