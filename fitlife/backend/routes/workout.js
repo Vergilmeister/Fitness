@@ -56,6 +56,24 @@ router.get('/stats', async (req, res) => {
   }
 });
 
+// @route   GET /api/workouts/:id
+// @desc    Get a specific workout by ID
+// @access  Private
+router.get('/:id', async (req, res) => {
+  try {
+    const workout = await Workout.findById(req.params.id);
+    if (!workout) return res.status(404).json({ message: 'Workout not found' });
+
+    if (workout.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to view this workout' });
+    }
+
+    res.json(workout);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error fetching workout' });
+  }
+});
+
 // @route   POST /api/workouts
 // @desc    Create a new workout
 // @access  Private
