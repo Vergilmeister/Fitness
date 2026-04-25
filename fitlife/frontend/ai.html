@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Coach – FitLife</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/dashboard" class="nav-logo">FitLife<span class="logo-dot"></span></a>
+      <div class="nav-links">
+        <a href="/dashboard" class="nav-hide">Dashboard</a>
+        <a href="/ai" class="active nav-hide">AI Coach</a>
+        <a href="/chat" class="nav-hide">Chat</a>
+        <button onclick="logout()" class="btn btn-ghost btn-sm">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="ai-page">
+
+    <div class="dashboard-header slide-up">
+      <h2>🤖 AI Fitness Coach</h2>
+      <p>Tell us about yourself and get a personalized workout & diet plan instantly.</p>
+    </div>
+
+    <!-- AI Form -->
+    <div class="ai-form-card slide-up">
+      <div id="alertBox"></div>
+
+      <form id="aiForm" novalidate>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Your Goal</label>
+            <select id="aiGoal" class="form-control">
+              <option value="">Select your goal</option>
+              <option value="lose_weight">🏃 Lose Weight</option>
+              <option value="build_muscle">💪 Build Muscle</option>
+              <option value="improve_endurance">🏅 Improve Endurance</option>
+              <option value="stay_healthy">🌿 Stay Healthy</option>
+            </select>
+            <div class="form-error hidden" id="goalError"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Age</label>
+            <input type="number" id="aiAge" class="form-control" placeholder="e.g. 28" min="10" max="100" />
+            <div class="form-error hidden" id="ageError"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Activity Level</label>
+          <select id="aiActivity" class="form-control">
+            <option value="">Select activity level</option>
+            <option value="sedentary">🪑 Sedentary (desk job, little exercise)</option>
+            <option value="light">🚶 Light (1–3 days/week exercise)</option>
+            <option value="moderate">🏃 Moderate (3–5 days/week exercise)</option>
+            <option value="active">🔥 Very Active (6–7 days/week exercise)</option>
+            <option value="athlete">🏆 Athlete (intense daily training)</option>
+          </select>
+          <div class="form-error hidden" id="activityError"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="aiBtn">
+          Generate My Plan
+        </button>
+      </form>
+    </div>
+
+    <!-- AI Result -->
+    <div class="ai-result" id="aiResult">
+      <div class="ai-section">
+        <h3>💪 Your Weekly Workout Plan</h3>
+        <pre id="workoutPlan"></pre>
+      </div>
+      <div class="ai-section">
+        <h3>🥗 Your Daily Diet Plan</h3>
+        <pre id="dietPlan"></pre>
+      </div>
+      <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--slate-100); font-size: 0.82rem; color: var(--slate-400);">
+        Generated on <span id="planDate"></span> · Saved to your history
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="card mt-4">
+      <div class="section-header">
+        <h3>📋 Past Suggestions</h3>
+      </div>
+      <div id="historyList">
+        <div class="page-loader"><div class="loader"></div></div>
+      </div>
+    </div>
+
+  </main>
+
+  <script type="module" src="js/ai.js"></script>
+  <script>
+    function logout() {
+      localStorage.removeItem('fitlife_token');
+      localStorage.removeItem('fitlife_user');
+      window.location.href = '/login';
+    }
+  </script>
+
+</body>
+</html>

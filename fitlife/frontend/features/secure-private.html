@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure & Private — FitLife</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --g1:#0b1610;--lime:#f06060;
+      --white:#f0f7ec;--muted:#7a9474;
+      --font-head:'Syne',sans-serif;--font-body:'Instrument Sans',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--g1);color:var(--white);-webkit-font-smoothing:antialiased;}
+    a{text-decoration:none;color:inherit;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 3rem;
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(11,22,16,0.85);backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-logo{font-family:var(--font-head);font-size:1.4rem;font-weight:800;
+      letter-spacing:-0.02em;display:flex;align-items:center;gap:0.5rem;}
+    .nav-dot{width:8px;height:8px;background:var(--lime);border-radius:50%;
+      box-shadow:0 0 10px var(--lime);}
+    .nav-back{font-size:0.86rem;color:var(--muted);
+      padding:0.45rem 1rem;border-radius:100px;
+      border:1px solid rgba(255,255,255,0.08);transition:all 0.2s;}
+    .nav-back:hover{color:var(--white);border-color:rgba(255,255,255,0.2);}
+    .nav-cta{background:var(--lime);color:#0b1610;font-weight:700;
+      font-size:0.86rem;padding:0.45rem 1.2rem;border-radius:100px;transition:all 0.2s;}
+    .nav-cta:hover{opacity:0.85;}
+
+    /* HERO */
+    .feat-hero{
+      padding:10rem 2rem 5rem;
+      max-width:1100px;margin:0 auto;
+      position:relative;
+    }
+    .feat-hero-orb{
+      position:absolute;width:600px;height:600px;
+      background:radial-gradient(circle,#f0606018 0%,transparent 65%);
+      top:0;right:-100px;pointer-events:none;
+    }
+    .feat-tag{display:inline-block;font-size:0.72rem;font-weight:700;
+      letter-spacing:0.1em;text-transform:uppercase;
+      color:var(--lime);background:#f0606012;
+      border:1px solid #f0606022;
+      padding:0.22rem 0.7rem;border-radius:100px;margin-bottom:1.2rem;}
+    .feat-hero h1{font-family:var(--font-head);
+      font-size:clamp(2.8rem,7vw,5.5rem);
+      font-weight:800;letter-spacing:-0.035em;line-height:1;
+      color:var(--white);margin-bottom:0.8rem;}
+    .feat-hero h1 .accent{color:var(--lime);}
+    .feat-tagline{font-size:1.1rem;color:var(--muted);
+      margin-bottom:1.8rem;font-style:italic;}
+    .feat-hero p.desc{font-size:1rem;color:#a0b89a;max-width:600px;
+      line-height:1.8;margin-bottom:3rem;}
+    .btn-lime{background:var(--lime);color:#0b1610;
+      font-family:var(--font-head);font-weight:700;font-size:0.92rem;
+      padding:0.8rem 2rem;border-radius:100px;border:none;
+      cursor:pointer;transition:all 0.2s;display:inline-flex;
+      align-items:center;gap:0.5rem;}
+    .btn-lime:hover{transform:translateY(-2px);opacity:0.9;}
+    .btn-ghost{background:transparent;color:var(--white);
+      font-family:var(--font-head);font-weight:600;font-size:0.92rem;
+      padding:0.8rem 2rem;border-radius:100px;
+      border:1px solid rgba(255,255,255,0.12);
+      cursor:pointer;transition:all 0.2s;display:inline-flex;
+      align-items:center;gap:0.5rem;}
+    .btn-ghost:hover{border-color:var(--lime);color:var(--lime);}
+
+    /* HIGHLIGHTS */
+    .highlights-section{padding:5rem 2rem;max-width:1100px;margin:0 auto;}
+    .section-label{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;
+      text-transform:uppercase;color:var(--lime);margin-bottom:0.7rem;}
+    .section-h{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,2.6rem);
+      font-weight:800;letter-spacing:-0.025em;color:var(--white);
+      margin-bottom:3rem;}
+    .feat-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+    .feat-detail-card{
+      background:rgba(255,255,255,0.025);
+      border:1px solid #f0606018;
+      border-radius:18px;padding:1.75rem;
+      transition:all 0.3s;
+    }
+    .feat-detail-card:hover{
+      border-color:#f0606040;
+      background:rgba(255,255,255,0.04);
+      transform:translateY(-4px);
+    }
+    .fdc-icon{font-size:1.6rem;margin-bottom:1rem;}
+    .feat-detail-card h4{font-family:var(--font-head);font-size:0.95rem;
+      font-weight:700;color:var(--white);margin-bottom:0.4rem;}
+    .feat-detail-card p{font-size:0.84rem;color:var(--muted);line-height:1.75;}
+
+    /* HOW TO USE */
+    .howto-section{
+      padding:5rem 2rem;
+      background:#f0606005;
+      border-top:1px solid #f0606010;
+      border-bottom:1px solid #f0606010;
+    }
+    .howto-inner{max-width:700px;margin:0 auto;}
+    .howto-step{
+      display:flex;align-items:flex-start;gap:1.2rem;
+      padding:1.2rem 0;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      font-size:0.95rem;color:#b0c8aa;line-height:1.6;
+    }
+    .howto-step:last-child{border-bottom:none;}
+    .howto-num{
+      min-width:32px;height:32px;border-radius:50%;
+      background:#f0606015;border:1px solid #f0606025;
+      color:var(--lime);font-family:var(--font-head);font-size:0.82rem;
+      font-weight:800;display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    }
+
+    /* CTA */
+    .feat-cta{
+      padding:7rem 2rem;text-align:center;position:relative;
+    }
+    .feat-cta-orb{
+      position:absolute;width:500px;height:300px;
+      background:radial-gradient(ellipse,#f0606010 0%,transparent 70%);
+      top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+    }
+    .feat-cta h2{font-family:var(--font-head);
+      font-size:clamp(2rem,5vw,3.5rem);
+      font-weight:800;letter-spacing:-0.03em;
+      color:var(--white);margin-bottom:1.2rem;}
+    .feat-cta h2 em{font-style:normal;color:var(--lime);}
+    .feat-cta p{color:var(--muted);margin-bottom:2.5rem;font-size:0.97rem;}
+    .feat-cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+
+    /* NAV PILLS */
+    .feat-nav-pills{
+      display:flex;justify-content:center;gap:0.6rem;
+      padding:1.5rem 2rem 0;flex-wrap:wrap;
+    }
+    .pill{
+      font-size:0.78rem;font-weight:600;
+      padding:0.35rem 0.9rem;border-radius:100px;
+      border:1px solid rgba(255,255,255,0.08);
+      color:var(--muted);transition:all 0.2s;
+    }
+    .pill:hover{color:var(--white);border-color:rgba(255,255,255,0.2);}
+    .pill.active{background:#f0606015;border-color:#f0606030;color:var(--lime);}
+
+    /* FOOTER */
+    footer{padding:2rem;text-align:center;
+      border-top:1px solid rgba(255,255,255,0.05);
+      color:var(--muted);font-size:0.8rem;}
+    footer strong{color:var(--lime);}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(22px);
+      transition:all 0.6s cubic-bezier(0.16,1,0.3,1);}
+    .reveal.vis{opacity:1;transform:translateY(0);}
+
+    @media(max-width:900px){
+      .feat-detail-grid{grid-template-columns:1fr 1fr;}
+      nav{padding:1rem 1.5rem;}
+    }
+    @media(max-width:580px){
+      .feat-detail-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">FitLife <span class="nav-dot"></span></a>
+  <div style="display:flex;gap:0.5rem;align-items:center">
+    <a href="/" class="nav-back">← Back to Home</a>
+    <a href="/register" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- Feature pills nav -->
+<div class="feat-nav-pills" style="padding-top:5.5rem;">
+  <a href="/features/workout-tracker" class="pill">💪 Workout Tracker</a>
+  <a href="/features/ai-coach" class="pill">🤖 AI Coach</a>
+  <a href="/features/community-chat" class="pill">💬 Community Chat</a>
+  <a href="/features/smart-dashboard" class="pill">📊 Dashboard</a>
+  <a href="/features/secure-private" class="pill active">🔒 Security</a>
+  <a href="/features/responsive" class="pill">📱 Responsive</a>
+</div>
+
+<!-- HERO -->
+<section class="feat-hero reveal">
+  <div class="feat-hero-orb"></div>
+  <div class="feat-tag">Security</div>
+  <h1><span class="accent">🔒</span> Secure & Private</h1>
+  <div class="feat-tagline">Your data. Your rules. Always.</div>
+  <p class="desc">Security is built into every layer of FitLife. From password hashing to token validation and server-side input checking, your data is protected end-to-end. You never have to think about it — it just works.</p>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+    <a href="/register" class="btn-lime">Start Free →</a>
+    <a href="/" class="btn-ghost">View All Features</a>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="highlights-section">
+  <div class="reveal">
+    <div class="section-label">✦ What's Included</div>
+    <div class="section-h">Everything this feature does</div>
+  </div>
+  <div class="feat-detail-grid">
+    
+        <div class="feat-detail-card">
+          <div class="fdc-icon">🔑</div>
+          <h4>JWT Authentication</h4>
+          <p>Secure JSON Web Tokens with a 7-day expiry keep sessions safe and stateless.</p>
+        </div>
+        <div class="feat-detail-card">
+          <div class="fdc-icon">🛡️</div>
+          <h4>bcrypt Hashing</h4>
+          <p>Passwords are hashed with bcrypt (salt rounds: 10) — never stored in plain text.</p>
+        </div>
+        <div class="feat-detail-card">
+          <div class="fdc-icon">✅</div>
+          <h4>Input Validation</h4>
+          <p>All API routes validate inputs server-side using express-validator.</p>
+        </div>
+        <div class="feat-detail-card">
+          <div class="fdc-icon">🚫</div>
+          <h4>Route Protection</h4>
+          <p>Every private endpoint requires a valid token — no exceptions.</p>
+        </div>
+        <div class="feat-detail-card">
+          <div class="fdc-icon">👤</div>
+          <h4>Ownership Checks</h4>
+          <p>Users can only access, edit, or delete their own workouts and suggestions.</p>
+        </div>
+        <div class="feat-detail-card">
+          <div class="fdc-icon">🔐</div>
+          <h4>Env-Based Secrets</h4>
+          <p>JWT secret and API keys are stored in .env — never committed to source code.</p>
+        </div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section class="howto-section">
+  <div class="howto-inner">
+    <div class="reveal">
+      <div class="section-label" style="margin-bottom:0.7rem">✦ How To Use</div>
+      <div class="section-h">Get started in minutes</div>
+    </div>
+    
+          <div class="howto-step">
+            <span class="howto-num">1</span>
+            <span>Register — your password is hashed before it ever hits the database</span>
+          </div>
+          <div class="howto-step">
+            <span class="howto-num">2</span>
+            <span>Log in — receive a secure JWT token stored in your browser</span>
+          </div>
+          <div class="howto-step">
+            <span class="howto-num">3</span>
+            <span>Every API call includes your token in the Authorization header</span>
+          </div>
+          <div class="howto-step">
+            <span class="howto-num">4</span>
+            <span>Tokens expire after 7 days, requiring a fresh login</span>
+          </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="feat-cta">
+  <div class="feat-cta-orb"></div>
+  <h2 class="reveal">Ready to use <em>Secure & Private?</em></h2>
+  <p class="reveal">Join FitLife for free and unlock every feature today.</p>
+  <div class="feat-cta-btns reveal">
+    <a href="/register" class="btn-lime">Create Free Account →</a>
+    <a href="/features/responsive" class="btn-ghost">Responsive Design →</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 <strong>FitLife</strong> &middot; Built with Node.js, Express, MongoDB &amp; Socket.IO</p>
+</footer>
+
+<script>
+  const revEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e,i) => {
+      if(e.isIntersecting) setTimeout(()=>e.target.classList.add('vis'), i*60);
+    });
+  }, {threshold:0.08});
+  revEls.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
